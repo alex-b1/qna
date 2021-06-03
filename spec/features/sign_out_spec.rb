@@ -5,9 +5,7 @@ feature 'User can sign out', %q{
   As an authenticated user
   I'd like to be able to sign out
 } do
-
   given(:user) { create(:user) }
-
   background { visit new_user_session_path }
 
   scenario 'Authenticated user can sign out' do

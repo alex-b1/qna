@@ -5,7 +5,6 @@ feature 'User can create question', %q{
   As an authenticated user
   I'd like to be able to ask the question
 } do
-
   given(:user) {create(:user)}
 
   describe 'Authenticated user' do
@@ -16,7 +15,7 @@ feature 'User can create question', %q{
       click_on 'Ask question'
     end
 
-    scenario 'asks a question' do
+    scenario 'Asks a question' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
       click_on 'Ask'
@@ -26,7 +25,7 @@ feature 'User can create question', %q{
       expect(page).to have_content 'text text text'
     end
 
-    scenario 'asks a question with errors' do
+    scenario 'Asks a question with errors' do
       click_on 'Ask'
 
       expect(page).to have_content "Title can't be blank"

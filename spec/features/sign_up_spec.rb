@@ -5,9 +5,7 @@ feature 'User can sign up', %q{
   As an unauthenticated user
   I'd like to be able to sign up
 } do
-
   given(:user) { create(:user) }
-
   background { visit new_user_registration_path }
 
   scenario 'Unregistered user tries to sign up' do
@@ -45,5 +43,4 @@ feature 'User can sign up', %q{
 
     expect(page).to have_content "Password confirmation doesn't match Password"
   end
-
 end
