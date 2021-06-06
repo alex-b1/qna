@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+  let(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #new' do
+    before { login(user) }
     before { get :new, params: {question_id: question} }
 
     it 'renders new view' do
@@ -13,6 +15,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
+    before { login(user) }
     before { get :show, params: {id: answer} }
 
     it 'renders show view' do
@@ -21,6 +24,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(question.answers, :count).by(1)
@@ -28,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: {question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to assigns(:question)
       end
     end
 
@@ -39,7 +44,50 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders new view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new
+        expect(response).to render_template('questions/show')
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:answer) { create(:answer, question: question, user: user )}
+
+    context 'user is author' do
+      before { login(user) }
+
+      it 'check that answer was deleted' do
+        delete :destroy, params: { id: answer }
+        expect(assigns(:answer)).to be_destroyed
+      end
+
+      it 'redirects to questions list' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    context 'user is not author' do
+      let(:other_user) { create(:user) }
+      before { login(other_user) }
+
+      it 'tries to delete answer' do
+        expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
+      end
+
+      it 'redirects to questions list' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    context 'unauthorized user' do
+      it 'tries to delete answer' do
+        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+      end
+
+      it 'redirects to login page' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end
