@@ -11,9 +11,11 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
+    <%= render 'shared/nav' %>
+    <div class="row justify-content-center flex-column">
+      <p class="notice col col-md-6 m-auto"><%= notice %></p>
+      <p class="alert col col-md-6 m-auto"><%= alert %></p>
+    </div>
     <%= yield %>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 feature 'User can create answers for questions', %q{
@@ -15,20 +14,20 @@ feature 'User can create answers for questions', %q{
       visit question_path(question)
     end
 
-    scenario 'Create the answer with valid data' do
-      fill_in 'Body', with: 'Answer text'
-      click_on 'New answer'
+    scenario 'Create the answer with valid data', js: true do
+      fill_in 'Your answer', with: 'Answer text'
+      click_on 'Create'
       expect(page).to have_content 'Answer text'
     end
 
-    scenario 'Create the answer with empty data' do
-      click_on 'New answer'
+    scenario 'Create the answer with empty data', js: true do
+      click_on 'Create'
       expect(page).to have_content "Body can't be blank"
     end
   end
 
-  scenario "Unauthenticated user can't create answer" do
+  scenario "Unauthenticated user can't create answer", js: true do
     visit question_path(question)
-    expect(page).to_not have_content 'New answer'
+    expect(page).to_not have_content 'Create'
   end
 end

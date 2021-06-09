@@ -6,19 +6,26 @@ class AnswersController < ApplicationController
   def new; end
 
   def create
-    @answer = question.answers.new(answer_params)
-    @answer.user = current_user
+    @answer = question.answers.create(answer_params.merge(user: current_user))
+  end
 
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      render 'questions/show'
+  def update
+    if current_user&.author?(answer)
+      answer.update(answer_params)
+      answer
     end
   end
 
   def destroy
-    answer.destroy if current_user.author?(answer)
-    redirect_to question_path(answer.question)
+    if current_user.author?(answer)
+      answer.destroy
+      flash[:notice] = 'Destroyed successfully'
+    end
+  end
+
+  def mark_as_best
+    @question = answer.question
+    answer.mark_as_best if current_user.author?(@question)
   end
 
   private

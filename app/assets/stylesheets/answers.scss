@@ -1,3 +1,13 @@
-// Place all the styles related to the Answers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.best {
+  position: relative;
+  &:before {
+    position: absolute;
+    content: '';
+    width: 30px;
+    height: 30px;
+    background-image: url('check.svg');
+    background-position: center;
+    background-size: cover;
+    left: -36px
+  }
+}

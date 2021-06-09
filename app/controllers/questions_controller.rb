@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = question.answers.new
+
   end
 
   def new; end
@@ -14,8 +14,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
@@ -25,10 +24,9 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
+    if current_user.author?(question)
+      question.update(question_params)
+      question
     end
   end
 
