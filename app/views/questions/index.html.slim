@@ -1,12 +1,7 @@
-h3 Questions
-table
-  thead
-    tr
-      th Title
-      th Body
-  tbody
-    = render @questions
-
-p= link_to 'Ask question', new_question_path
-
-input= button_to 'Log out', destroy_user_session_path, method: :delete
+.row.justify-content-center.mt-3
+  .col.col-md-6
+    .form-group.mt-3
+      h3 Questions
+      .questions.list-group
+        = render @questions
+      p= link_to 'Ask question', new_question_path, class: "btn btn-primary mt-3 btn-sm"

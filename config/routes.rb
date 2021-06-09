@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
- devise_for :users
+  devise_for :users
 
- resources :questions do
-  resources :answers, shallow: true
- end
+  resources :questions do
+    resources :answers, shallow: true do
+      member do
+        post :mark_as_best
+      end
+    end
+  end
 
   root to: "questions#index"
 end
