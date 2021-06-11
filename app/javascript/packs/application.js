@@ -10,6 +10,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "../utilities/answers"
 import "../utilities/questions"
+import "../utilities/direct_uploads"
 
 window.jQuery = $;
 window.$ = $;

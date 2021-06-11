@@ -24,6 +24,16 @@ feature 'User can create answers for questions', %q{
       click_on 'Create'
       expect(page).to have_content "Body can't be blank"
     end
+
+    scenario 'asks a answer with attached file', js: true do
+      fill_in 'Your answer', with: 'Answer text'
+
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Create'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
   scenario "Unauthenticated user can't create answer", js: true do

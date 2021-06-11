@@ -3,11 +3,15 @@ div id="question-id-#{question.id}"
   - if current_user && current_user.author?(question)
     .d-flex.flex-column
       .d-flex.form-group.flex-column.mb-2.row
+        .question-errors
+          = render 'shared/errors', resource: @answer
         = form_with model: question, class: 'hidden', local: false, html: { id: "edit-question-#{question.id}" } do |f|
           = f.label :title, 'title'
           = f.text_field :title, class: "form-control"
           = f.label :body, 'body'
           = f.text_area :body, class: 'form-control'
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
           = f.submit 'Save', class: "btn btn-primary mt-3 btn-sm"
       .d-flex.controls.mb-3
         = link_to 'Edit', '#',

@@ -8,4 +8,8 @@
         = f.text_field :title, class: "form-control"
         = f.label :body
         = f.text_area :body, class: "form-control"
+
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+
         = f.submit 'Ask', class: "mt-3 btn-sm"
