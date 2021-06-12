@@ -10,13 +10,30 @@
               data: { confirm: 'Are you sure?' },
               class: "btn btn-danger mt-3 btn-sm"
     hr
+
+    .links
+      h4 Links:
+      ul
+        - question.links.each do |link|
+          li= link_to link.name, link.url
+
     .answers.form-group.mt-3
       = render question.answers
     .answer-errors
       = render 'shared/errors', resource: @answer
-    = form_with model: [question, question.answers.new], local: false, class: 'new-answer' do |f|
+    = form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
       = f.label :body, 'Your answer'
       = f.text_area :body, class: "form-control"
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+      .h4.mt-3 Links:
+      .row
+        = f.fields_for :links do |l|
+          .col
+            = l.label :name, 'Link name'
+            = l.text_field :name, class: "form-control"
+          .col
+            = l.label :url
+            = l.text_field :url, class: "d-flex collumn form-control"
+
       = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
