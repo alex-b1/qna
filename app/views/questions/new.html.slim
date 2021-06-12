@@ -2,9 +2,9 @@
   .col.col-md-6
     .form-group.mt-3
       .answer-errors
-        = render 'shared/errors', resource: question
+        = render 'shared/errors', resource: @question
 
-      = form_with model: question, local: false do |f|
+      = form_with model: question do |f|
         = f.label :title
         = f.text_field :title, class: "form-control"
         = f.label :body
@@ -20,5 +20,7 @@
           .col
             = l.label :url
             = l.text_field :url, class: "d-flex collumn form-control"
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
 
         = f.submit 'Ask', class: "d-flex mt-3 btn-sm"

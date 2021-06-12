@@ -31,9 +31,11 @@
         = f.fields_for :links do |l|
           .col
             = l.label :name, 'Link name'
-            = l.text_field :name, class: "form-control"
+            = l.text_field :name, class: "new-link-name form-control"
           .col
             = l.label :url
-            = l.text_field :url, class: "d-flex collumn form-control"
+            = l.text_field :url, class: "new-link-url  collumn form-control"
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
 
       = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
