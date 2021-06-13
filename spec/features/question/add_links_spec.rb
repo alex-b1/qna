@@ -7,7 +7,8 @@ feature 'User can add links to question', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:url) { 'https://mail.ru/' }
+  given(:gist_url) { 'https://gist.github.com/alex-b1/ba9f1444dffa83bb8061eed5bb8b35d2' }
   given(:yandex_url) { 'https://yandex.ru/' }
   given(:invalid_url) { 'yandex.ru' }
 
@@ -18,8 +19,8 @@ feature 'User can add links to question', %q{
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text text'
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+    fill_in 'Link name', with: 'mail'
+    fill_in 'Url', with: url
 
     click_on 'add link'
 
@@ -30,7 +31,7 @@ feature 'User can add links to question', %q{
 
     click_on 'Ask'
 
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_link 'mail', href: url
     expect(page).to have_link 'Yandex', href: yandex_url
   end
 
@@ -49,4 +50,18 @@ feature 'User can add links to question', %q{
     expect(page).to have_content "Links url is invalid"
   end
 
+  scenario 'User add link to gist when asks question', js: true do
+    sign_in(user)
+    visit new_question_path
+
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'text text text'
+
+    fill_in 'Link name', with: 'gist'
+    fill_in 'Url', with: gist_url
+
+    click_on 'Ask'
+
+    expect(page).to have_content 'Столица Италии? Рим Венеция Неаполь Милан'
+  end
 end
