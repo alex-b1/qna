@@ -5,9 +5,12 @@
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
+
 import * as ActiveStorage from "@rails/activestorage"
 import "jquery"
 import "@nathanvda/cocoon"
+const GistClient = require("gist-client");
+const gistClient = new GistClient();
 
 import "../utilities/answers"
 import "../utilities/questions"
@@ -15,6 +18,7 @@ import "../utilities/direct_uploads"
 
 window.jQuery = $;
 window.$ = $;
+window.gistClient = gistClient;
 
 Rails.start()
 Turbolinks.start()

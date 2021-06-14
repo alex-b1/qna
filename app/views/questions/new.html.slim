@@ -12,15 +12,6 @@
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
 
-        .h4.mt-3 Links:
-        .row = f.fields_for :links do |l|
-          .col
-            = l.label :name, 'Link name'
-            = l.text_field :name, class: "form-control"
-          .col
-            = l.label :url
-            = l.text_field :url, class: "d-flex collumn form-control"
-        .links
-          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
+        = render 'links/add_link', resource: @question,  f: f
 
         = f.submit 'Ask', class: "d-flex mt-3 btn-sm"

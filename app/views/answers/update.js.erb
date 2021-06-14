@@ -2,4 +2,6 @@ $('.answer-errors').html('<%= render 'shared/errors', resource: answer %>');
 
 <% if !answer.errors.present? %>
   $('.answers').html('<%= j render answer.question.answers %>');
+
+
 <% end %>

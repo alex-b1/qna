@@ -1,0 +1,12 @@
+.h4.mt-3 Links:
+.links
+  = f.fields_for :links do |l|
+    .row id=("link_form_#{l.object.id}")
+      .col
+        = l.label :name, 'Link name'
+        = l.text_field :name, class: "new-link-name form-control"
+      .col
+        = l.label :url
+        = l.text_field :url, class: "new-link-url  collumn form-control"
+  .add_links
+    = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'

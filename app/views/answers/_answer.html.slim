@@ -1,16 +1,7 @@
 .answer id= "answer-#{answer.id}"
   div class= ('best' + (answer.best ? '' : '-no')) =answer.body
-  .links
-    h4 Links:
-    ul
-      - answer.links.each do |link|
-        - if link.gist?
-          li= link.name
-          .d-flex.flex-collumn
-            - link.read_gist.each do |file, content|
-              .content = content.content
-        - else
-          li= link_to link.name, link.url
+
+  = render 'links/link', resource: answer
 
   = render 'shared/attachments', resource: answer
   .d-flex.controls.mt-3.mb-2.row
@@ -22,6 +13,9 @@
             = f.text_area :body, class: "form-control"
             = f.label :files
             = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+
+            = render 'links/add_link', resource: answer,  f: f
+
             = f.submit 'Save', class: "btn btn-primary mt-3 btn-sm"
         .d-flex.controls
           = link_to 'Edit', '#',
