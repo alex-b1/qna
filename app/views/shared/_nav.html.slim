@@ -1,6 +1,11 @@
 .row.navbar.navbar-light.bg-light.px-3
   .d-flex.justify-content-between
-    = link_to 'QNA', root_path, class: "navbar-brand nav-link"
-    = button_to 'Log out', destroy_user_session_path, method: :delete, class: "btn btn-secondary btn-sm"
+    .left
+      = link_to 'QNA', root_path, class: "navbar-brand nav-link"
+    .rigth.row
+      .col
+        = link_to "Rewards", rewards_path, class: "btn btn-success btn-sm"
+      .col
+        = button_to 'Log out', destroy_user_session_path, method: :delete, class: "btn btn-secondary btn-sm"
 
 

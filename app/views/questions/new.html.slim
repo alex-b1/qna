@@ -14,4 +14,6 @@
 
         = render 'links/add_link', resource: @question,  f: f
 
+        = render 'reward_form', f: f
+
         = f.submit 'Ask', class: "d-flex mt-3 btn-sm"
