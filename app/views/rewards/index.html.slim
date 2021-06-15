@@ -1,0 +1,17 @@
+.row.justify-content-center.mt-3
+  .col.col-md-6
+    .h4 Rewards:
+    - if !@rewards.empty?
+      - @rewards.each do |reward|
+        .d-flex.flex-column
+          .d-flex
+            .title Вопрос -
+            .text = reward.question.title
+          .d-flex
+            .title Награда -
+            .text = reward.title
+          - if reward.image.attached?
+            = image_tag reward.image, size: "100x80"
+          hr
+    - else
+      = "You don't have any rewards"

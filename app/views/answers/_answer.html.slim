@@ -1,5 +1,8 @@
 .answer id= "answer-#{answer.id}"
   div class= ('best' + (answer.best ? '' : '-no')) =answer.body
+
+  = render 'links/link', resource: answer
+
   = render 'shared/attachments', resource: answer
   .d-flex.controls.mt-3.mb-2.row
     - if current_user&.author?(answer)
@@ -10,6 +13,9 @@
             = f.text_area :body, class: "form-control"
             = f.label :files
             = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+
+            = render 'links/add_link', resource: answer,  f: f
+
             = f.submit 'Save', class: "btn btn-primary mt-3 btn-sm"
         .d-flex.controls
           = link_to 'Edit', '#',

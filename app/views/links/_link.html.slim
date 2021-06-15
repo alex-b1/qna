@@ -1,0 +1,35 @@
+- if resource.links.length > 0
+  .links
+    h4 Links:
+    ul
+      - resource.links.each do |link|
+        li id=("link_#{link.id}")
+          - if link.gist?
+            .gist-name = link.name
+            .link_gist class= "gist_id_#{link.gist_id}_#{link.id}"
+              javascript:
+                setTimeout(()=> {
+                    gistClient.setToken("#{ENV['GITHUB_ACCESS_TOKEN']}");
+                    var gistId = "#{link.gist_id}";
+                    var index = "#{link.id}";
+                    var data = document.createElement('div');
+
+                    gistClient.getOneById("#{link.gist_id}").then(r => {
+                        Object.keys(r.files).forEach(i => {
+                            var gist = document.createElement('div');
+                            gist.textContent = r.files[i].content;
+                            data.appendChild(gist);
+                        })
+
+                        var gist = document.querySelector(`.gist_id_${gistId}_${index}`)
+                        gist.appendChild(data)
+                    })
+                }, 1)
+          - else
+            = link_to link.name, link.url
+          -if current_user&.author?(link.linkable)
+            .controls
+              = link_to 'Delete link', link_path(link),
+                      remote: true,
+                      method: :delete,
+                      class: "control btn btn-danger btn-sm"
