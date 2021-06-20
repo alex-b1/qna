@@ -1,6 +1,8 @@
 .answer id= "answer-#{answer.id}"
   div class= ('best' + (answer.best ? '' : '-no')) =answer.body
 
+  = render 'shared/vote', resource: answer
+
   = render 'links/link', resource: answer
 
   = render 'shared/attachments', resource: answer

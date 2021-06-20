@@ -15,6 +15,7 @@ const gistClient = new GistClient();
 import "../utilities/answers"
 import "../utilities/questions"
 import "../utilities/direct_uploads"
+import "../utilities/vote"
 
 window.jQuery = $;
 window.$ = $;
