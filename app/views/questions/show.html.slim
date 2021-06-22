@@ -20,7 +20,7 @@
     .answer-errors
       = render 'shared/errors', resource: @answer
     .h4 New Answer
-    = form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
+    = form_with model: [question, @answer], local: false, data: { type: :json }, class: 'new-answer' do |f|
       = f.label :body, 'Your answer'
       = f.text_area :body, class: "form-control"
       = f.label :files

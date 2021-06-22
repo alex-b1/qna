@@ -1,0 +1,23 @@
+-if current_user && !current_user.author?(resource)
+  .vote.mt-3
+    .d-flex
+      = link_to '+', polymorphic_path(resource, action: :vote_up),
+            class: "btn btn-success btn-sm",
+            method: :patch,
+            data: { type: :json },
+            remote: true
+
+      .rating.mx-3.my-auto id= "rating-#{resource.class.name.downcase}-#{resource.id}"
+          = resource.rating
+
+      = link_to '-', polymorphic_path(resource, action: :vote_down),
+              class: "btn btn-danger btn-sm",
+              method: :patch,
+              data: { type: :json },
+              remote: true
+
+    = link_to 'Cancel vote', polymorphic_path(resource, action: :cancel_vote),
+            class: "btn btn-info btn-sm mt-3",
+            method: :delete,
+            data: { type: :json },
+            remote: true
