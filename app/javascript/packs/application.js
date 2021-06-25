@@ -9,6 +9,9 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "jquery"
 import "@nathanvda/cocoon"
+import "actioncable"
+import "handlebars-loader"
+
 const GistClient = require("gist-client");
 const gistClient = new GistClient();
 
@@ -16,6 +19,7 @@ import "../utilities/answers"
 import "../utilities/questions"
 import "../utilities/direct_uploads"
 import "../utilities/vote"
+import "../channels"
 
 window.jQuery = $;
 window.$ = $;

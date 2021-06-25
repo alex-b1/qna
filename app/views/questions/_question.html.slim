@@ -1,6 +1,7 @@
 div id="question-id-#{question.id}"
   = link_to question.title, question_path(question) , class: "list-group-item"
-  = render 'shared/vote', resource: question
+  = render 'shared/vote', resource: question, current_user: current_user
+
   - if current_user && current_user.author?(question)
     .d-flex.flex-column
       .d-flex.form-group.flex-column.mb-2.row

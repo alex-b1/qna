@@ -1,0 +1,7 @@
+.comment_errors
+.new-comment
+  = form_with scope: :comment, url: make_comment_question_path(question), local: false  do |f|
+    = f.label :body, 'Body'
+    = f.text_area :body, class: 'form-control'
+
+    .mt-3 = f.submit 'Add comment'

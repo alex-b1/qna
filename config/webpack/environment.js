@@ -10,4 +10,9 @@ environment.plugins.prepend('Provide',
     })
 )
 
+environment.loaders.append('hbs', {
+    test: /\.hbs$/,
+    loader: 'handlebars-loader'
+})
+
 module.exports = environment
