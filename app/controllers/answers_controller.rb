@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!
+  after_action :publish_answer, only: :create
 
   def show; end
 
@@ -31,6 +33,17 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    if answer.errors.any?
+      return
+    end
+
+    ActionCable.server.broadcast("answers_#{params[:question_id]}", {
+        partial: ApplicationController.render( partial: 'answers/answer', locals: { answer: answer, current_user: current_user }),
+        answer: answer,
+        question: answer.question})
+  end
 
   def question
     @question ||= Question.find(params[:question_id])

@@ -7,6 +7,13 @@
 
     = render 'links/link', resource: question
 
+    .question_comments
+      h3= 'Comments'
+      - if current_user
+        = render 'comments/question_comment', question: question
+      .comments-question.d-flex.flex-column.mt-3 class=("comments_#{question.id}")
+        = render question.comments
+
     - if current_user&.author?(question)
       p= link_to 'Delete question',
               question_path(question),
@@ -15,7 +22,7 @@
               class: "btn btn-danger mt-3 btn-sm"
     hr
 
-    .answers.form-group.mt-3
+    .answers.form-group.mt-3 class=("answers_#{question.id}")
       = render question.answers
     .answer-errors
       = render 'shared/errors', resource: @answer
