@@ -19,6 +19,10 @@ gem 'cocoon'
 gem "octokit", "~> 4.0"
 gem 'gon'
 gem 'handlebars-source'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-vkontakte'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -32,6 +36,7 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
   gem 'spring'
+  gem 'letter_opener'
 end
 
 group :test do
@@ -41,6 +46,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'capybara-email'
+  gem 'webmock'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
   root to: "questions#index"
+
+  devise_for :users, controllers: {omniauth_callbacks: 'oauth_callbacks'}
+
+  namespace :users do
+    get '/set_email', to: 'emails#new'
+    post '/set_email', to: 'emails#create'
+  end
 
   concern :voted do
     member do
