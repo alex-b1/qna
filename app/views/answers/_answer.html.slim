@@ -8,11 +8,12 @@
   = render 'shared/attachments', resource: answer, current_user: current_user
 
   .answer_comments
-    h3= 'Comments'
     - if current_user
       = render 'comments/answer_comment', answer: answer
     .d-flex.flex-column.mt-3 class=("comments-answer-#{answer.id}")
-      = render answer.comments
+      - if !answer.comments.empty?
+        h3= 'Comments'
+        = render answer.comments
 
   .d-flex.controls.mt-3.mb-2.row
     - if current_user&.author?(answer)

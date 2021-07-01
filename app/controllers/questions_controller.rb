@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   after_action :publish_question, only: :create
 
+  authorize_resource
+
   def index
     @questions = Question.all
     gon.push({current_user: current_user})
@@ -38,14 +40,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(question)
-      question.update(question_params)
-      question
-    end
+    question.update(question_params)
+    question
   end
 
   def destroy
-    question.destroy if current_user.author?(question)
+    question.destroy if authorize! :destroy, question
     redirect_to questions_path
   end
 

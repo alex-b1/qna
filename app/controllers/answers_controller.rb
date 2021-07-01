@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def show; end
 
   def new; end
@@ -14,17 +16,13 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user&.author?(answer)
-      answer.update(answer_params)
-      answer
-    end
+    answer.update(answer_params) if authorize! :update, answer
+    answer
   end
 
   def destroy
-    if current_user.author?(answer)
-      answer.destroy
-      flash[:notice] = 'Destroyed successfully'
-    end
+    answer.destroy if authorize! :destroy, answer
+    flash[:notice] = 'Destroyed successfully'
   end
 
   def mark_as_best
@@ -40,7 +38,10 @@ class AnswersController < ApplicationController
     end
 
     ActionCable.server.broadcast("answers_#{params[:question_id]}", {
-        partial: ApplicationController.render( partial: 'answers/answer', locals: { answer: answer, current_user: current_user }),
+        partial: ApplicationController.render( partial: 'answers/answer', locals: {
+            answer: answer,
+            current_user: current_user
+        }),
         answer: answer,
         question: answer.question})
   end
