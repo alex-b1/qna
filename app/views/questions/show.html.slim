@@ -8,14 +8,15 @@
     = render 'links/link', resource: question
 
     .question_comments
-      h3= 'Comments'
       - if current_user
         = render 'comments/question_comment', question: question
       .comments-question.d-flex.flex-column.mt-3 class=("comments_#{question.id}")
+      -if !question.comments.empty?
+        h3= 'Comments'
         = render question.comments
 
-    - if current_user&.author?(question)
-      p= link_to 'Delete question',
+    - if can?(:destroy, question)
+      = link_to 'Delete question',
               question_path(question),
               method: :delete,
               data: { confirm: 'Are you sure?' },
@@ -26,13 +27,14 @@
       = render question.answers
     .answer-errors
       = render 'shared/errors', resource: @answer
-    .h4 New Answer
-    = form_with model: [question, @answer], local: false, data: { type: :json }, class: 'new-answer' do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body, class: "form-control"
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+    - if can?(:create, @answer)
+      .h4 New Answer
+      = form_with model: [question, @answer], local: false, data: { type: :json }, class: 'new-answer' do |f|
+        = f.label :body, 'Your answer'
+        = f.text_area :body, class: "form-control"
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
 
-      = render 'links/add_link', resource: @answer,  f: f
+        = render 'links/add_link', resource: @answer,  f: f
 
-      = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
+        = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
