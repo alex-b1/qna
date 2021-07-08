@@ -7,6 +7,10 @@
 
     = render 'links/link', resource: question
 
+    .subscription
+      - if can?(:create, Subscription)
+        = render 'subscriptions/subscription', resource: @question
+
     .question_comments
       - if current_user
         = render 'comments/question_comment', question: question

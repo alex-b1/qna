@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   include Commented
 
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :subscription, only: %i[show update]
   after_action :publish_question, only: :create
 
   authorize_resource
@@ -60,6 +61,10 @@ class QuestionsController < ApplicationController
         partial: ApplicationController.render( partial: 'questions/question',
                                                locals: { question: question, current_user: current_user }),
         question: question})
+  end
+
+  def subscription
+    @subscription = question.subscriptions.find_by(user: current_user)
   end
 
   def question
