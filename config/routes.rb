@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   use_doorkeeper
   root to: "questions#index"
 
+  post 'search', action: :search, controller: 'search'
+
   devise_for :users, controllers: {omniauth_callbacks: 'oauth_callbacks'}
 
   namespace :api do

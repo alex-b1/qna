@@ -8,7 +8,7 @@ class NotificationService
   def send_notification
     @question = @answer.question
     @question.subscriptions.find_each do |subscription|
-      NotificationsMailer.notifications(subscription.user, @answer).deliver_now
+      NotificationsMailer.notifications(subscription.user, @answer).deliver_later
     end
   end
 end

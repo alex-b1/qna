@@ -2,6 +2,13 @@
   .d-flex.justify-content-between
     .left
       = link_to 'QNA', root_path, class: "navbar-brand nav-link"
+
+    .search.d-flex.mx-5
+      = form_with url: search_path, local: true do |f|
+        .d-flex
+          = f.text_field :body, class: 'form-control inputSearch'
+          = f.select :type, SearchService::TYPES, class: 'form-control'
+          = f.submit 'Find', class: 'btn btn-success btn-sm mx-3'
     .rigth.row
       - if current_user
         .col
