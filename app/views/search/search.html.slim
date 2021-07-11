@@ -1,0 +1,20 @@
+.row.justify-content-center.mt-3
+  .col.col-md-6
+    .form-group.mt-3
+      - if @result.empty?
+        h3 No Result
+      - else
+        ul.list-group
+          - @result.each do |object|
+            li.list-group-item
+              - if object.is_a?(Answer)
+                .d-block = link_to object.question.body, question_path(object.question)
+                .d-block = "#{object.class}: #{object.body}"
+              - elsif object.is_a?(Comment)
+                .d-block = object.commentable.body
+                .d-block = "#{object.commentable.class} comment: #{object.body}"
+                .d-block = "#{object.class}: #{object.body}"
+              - elsif object.is_a?(User)
+                .d-block = link_to object.email, root_path
+              - else
+                .d-block = link_to object.title, question_path(object)

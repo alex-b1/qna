@@ -19,9 +19,11 @@ feature 'User can change the question', %q{
     scenario 'Edit a question', js: true do
       click_on 'Edit'
 
-      fill_in 'title', with: 'Edit question'
-      fill_in 'body', with: 'text text text'
-      click_on 'Save'
+      within '.question' do
+        fill_in 'title', with: 'Edit question'
+        fill_in 'body', with: 'text text text'
+        click_on 'Save'
+      end
 
       expect(page).to have_content 'Edit question'
 
@@ -35,8 +37,10 @@ feature 'User can change the question', %q{
 
     scenario 'Edit a question with errors', js: true do
       click_on 'Edit'
-      fill_in 'title', with: ''
-      fill_in 'body', with: ''
+      within '.question' do
+        fill_in 'title', with: ''
+        fill_in 'body', with: ''
+      end
 
       click_on 'Save'
 
