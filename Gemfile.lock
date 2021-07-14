@@ -474,7 +474,6 @@ DEPENDENCIES
   spring
   thinking-sphinx
   turbolinks (~> 5)
-  tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
   webmock
