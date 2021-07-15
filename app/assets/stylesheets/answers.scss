@@ -2,10 +2,11 @@
   position: relative;
   &:before {
     position: absolute;
-    content: '';
+    content: 'best';
+    color: green;
     width: 30px;
     height: 30px;
-    background-image: url('check.svg');
+    //background-image: url('check.svg');
     background-position: center;
     background-size: cover;
     left: -36px
