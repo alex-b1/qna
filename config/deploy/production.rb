@@ -2,13 +2,15 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
+#
+require "capistrano/sidekiq"
 
 server "157.245.68.244", user: "deployer", roles: %w{app db web}, primary: true
 set :rail_env, :production
 
-
-set :rvm_map_bins, [ 'bundle', 'rails', 'rake', 'setup', 'webpack', 'webpack-dev-server', 'yarn' ]
-
+set :rvm_map_bins, [ 'bundle', 'rails', 'rake', 'setup', 'webpack', 'webpack-dev-server', 'yarn' , 'sidekiq']
+set :pty,  false
+set :sidekiq_monit_use_sudo, false
 
 # Custom SSH Options
 # ==================

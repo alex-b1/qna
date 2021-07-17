@@ -12,6 +12,9 @@ require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
 require "capistrano3/unicorn"
 
+install_plugin Capistrano::Sidekiq  # Default sidekiq tasks
+install_plugin Capistrano::Sidekiq::Systemd
+# install_plugin Capistrano::Sidekiq::Monit  # tests needed
 
 # Load the SCM plugin appropriate to your project:
 #
