@@ -1,47 +1,48 @@
-.answer id= "answer-#{answer.id}"
-  div class= ('best' + (answer.best ? '' : '-no')) =answer.body
+- cache answer do
+  .answer id= "answer-#{answer.id}"
+    div class= ('best' + (answer.best ? '' : '-no')) =answer.body
 
-  = render 'shared/vote', resource: answer, current_user: current_user
+    = render 'shared/vote', resource: answer, current_user: current_user
 
-  = render 'links/link', resource: answer, current_user: current_user
+    = render 'links/link', resource: answer, current_user: current_user
 
-  = render 'shared/attachments', resource: answer, current_user: current_user
+    = render 'shared/attachments', resource: answer, current_user: current_user
 
-  .answer_comments
-    - if current_user
-      = render 'comments/answer_comment', answer: answer
-    .d-flex.flex-column.mt-3 class=("comments-answer-#{answer.id}")
-      - if !answer.comments.empty?
-        h3= 'Comments'
-        = render answer.comments
+    .answer_comments
+      - if current_user
+        = render 'comments/answer_comment', answer: answer
+      .d-flex.flex-column.mt-3 class=("comments-answer-#{answer.id}")
+        - if !answer.comments.empty?
+          h3= 'Comments'
+          = render answer.comments
 
-  .d-flex.controls.mt-3.mb-2.row
-    - if current_user&.author?(answer)
-      .d-flex.flex-column
-        .d-flex.form-group.flex-column.mb-2.row
-          = form_with model: answer, class: 'hidden', local: false, html: { id: "edit-answer-#{answer.id}" } do |f|
-            = f.label :body, 'Your answer'
-            = f.text_area :body, class: "form-control"
-            = f.label :files
-            = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+    .d-flex.controls.mt-3.mb-2.row
+      - if current_user&.author?(answer)
+        .d-flex.flex-column
+          .d-flex.form-group.flex-column.mb-2.row
+            = form_with model: answer, class: 'hidden', local: false, html: { id: "edit-answer-#{answer.id}" } do |f|
+              = f.label :body, 'Your answer'
+              = f.text_area :body, class: "form-control"
+              = f.label :files
+              = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
 
-            = render 'links/add_link', resource: answer,  f: f, current_user: current_user
+              = render 'links/add_link', resource: answer,  f: f, current_user: current_user
 
-            = f.submit 'Save', class: "btn btn-primary mt-3 btn-sm"
-        .d-flex.controls
-          = link_to 'Edit', '#',
-                  data: { answer_id: answer.id },
-                  class: "edit-answer-link control btn btn-info btn-sm",
-                  remote: true
-          = button_to 'Delete answer',
-                  answer_path(answer),
-                  method: :delete,
-                  class: "control btn btn-danger btn-sm",
-                  remote: true
-          - if current_user&.author?(answer.question) && !answer.best
-            = link_to 'Mark as best',
-                  mark_as_best_answer_path(answer),
-                  remote: true,
-                  class: "control btn btn-success btn-sm",
-                  method: :post
+              = f.submit 'Save', class: "btn btn-primary mt-3 btn-sm"
+          .d-flex.controls
+            = link_to 'Edit', '#',
+                    data: { answer_id: answer.id },
+                    class: "edit-answer-link control btn btn-info btn-sm",
+                    remote: true
+            = button_to 'Delete answer',
+                    answer_path(answer),
+                    method: :delete,
+                    class: "control btn btn-danger btn-sm",
+                    remote: true
+            - if current_user&.author?(answer.question) && !answer.best
+              = link_to 'Mark as best',
+                    mark_as_best_answer_path(answer),
+                    remote: true,
+                    class: "control btn btn-success btn-sm",
+                    method: :post
 

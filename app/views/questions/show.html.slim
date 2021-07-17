@@ -1,44 +1,45 @@
-.row.justify-content-center.mt-3
-  .col.col-md-6
-    h3= question.title
-    p= question.body
+- cache question do
+  .row.justify-content-center.mt-3
+    .col.col-md-6
+      h3= question.title
+      p= question.body
 
-    = render 'shared/attachments', resource: question
+      = render 'shared/attachments', resource: question
 
-    = render 'links/link', resource: question
+      = render 'links/link', resource: question
 
-    .subscription
-      - if can?(:create, Subscription)
-        = render 'subscriptions/subscription', resource: @question
+      .subscription
+        - if can?(:create, Subscription)
+          = render 'subscriptions/subscription', resource: @question
 
-    .question_comments
-      - if current_user
-        = render 'comments/question_comment', question: question
-      .comments-question.d-flex.flex-column.mt-3 class=("comments_#{question.id}")
-      -if !question.comments.empty?
-        h3= 'Comments'
-        = render question.comments
+      .question_comments
+        - if current_user
+          = render 'comments/question_comment', question: question
+        .comments-question.d-flex.flex-column.mt-3 class=("comments_#{question.id}")
+        -if !question.comments.empty?
+          h3= 'Comments'
+          = render question.comments
 
-    - if can?(:destroy, question)
-      = link_to 'Delete question',
-              question_path(question),
-              method: :delete,
-              data: { confirm: 'Are you sure?' },
-              class: "btn btn-danger mt-3 btn-sm"
-    hr
+      - if can?(:destroy, question)
+        = link_to 'Delete question',
+                question_path(question),
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                class: "btn btn-danger mt-3 btn-sm"
+      hr
 
-    .answers.form-group.mt-3 class=("answers_#{question.id}")
-      = render question.answers
-    .answer-errors
-      = render 'shared/errors', resource: @answer
-    - if can?(:create, @answer)
-      .h4 New Answer
-      = form_with model: [question, @answer], local: false, data: { type: :json }, class: 'new-answer' do |f|
-        = f.label :body, 'Your answer'
-        = f.text_area :body, class: "form-control"
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+      .answers.form-group.mt-3 class=("answers_#{question.id}")
+        = render question.answers
+      .answer-errors
+        = render 'shared/errors', resource: @answer
+      - if can?(:create, @answer)
+        .h4 New Answer
+        = form_with model: [question, @answer], local: false, data: { type: :json }, class: 'new-answer' do |f|
+          = f.label :body, 'Your answer'
+          = f.text_area :body, class: "form-control"
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
 
-        = render 'links/add_link', resource: @answer,  f: f
+          = render 'links/add_link', resource: @answer,  f: f
 
-        = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
+          = f.submit 'Create', class: "btn btn-primary mt-3 btn-sm"
